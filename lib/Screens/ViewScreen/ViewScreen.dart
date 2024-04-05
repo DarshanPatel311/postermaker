@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:ui' as ui;
-
+import 'package:share_extend/share_extend.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -187,6 +187,7 @@ class _ViewScreenState extends State<ViewScreen> {
               ),
             ),
             Container(
+              height: 200,
               width: 100,
               child: Column(
                 children: [
@@ -196,8 +197,9 @@ class _ViewScreenState extends State<ViewScreen> {
                           context: context,
                           builder: (context) {
                             return Container(
+                              height: 350,
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(20),
@@ -217,8 +219,22 @@ class _ViewScreenState extends State<ViewScreen> {
                                       ),
                                     ),
                                   ),
-                                  Text(
-                                    'alignment',
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(90, 5, 0, 0),
+                                        child: Text(
+                                          'alignment',
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(0, 5, 100, 0),
+                                        child: Text(
+                                          'Font Size',
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -257,7 +273,7 @@ class _ViewScreenState extends State<ViewScreen> {
                                                         )
                                                       ],
                                                       borderRadius: BorderRadius.all(Radius.circular(5)),
-                                                      color: Color(0xff1c2438),
+                                                      color: Colors.amberAccent,
                                                     ),
                                                     child: Icon(
                                                       Icons.arrow_drop_up,
@@ -292,14 +308,14 @@ class _ViewScreenState extends State<ViewScreen> {
                                                       decoration: const BoxDecoration(
                                                         boxShadow: [
                                                           BoxShadow(
-                                                            color: Colors.black,
+                                                            color: Colors.amberAccent,
                                                             blurRadius: 1,
                                                             spreadRadius: 0.5,
                                                           )
                                                         ],
                                                         borderRadius:
                                                         BorderRadius.all(Radius.circular(5)),
-                                                        color: Color(0xff1c2438),
+                                                        color: Colors.redAccent,
                                                       ),
                                                       child: Icon(
                                                         Icons.arrow_left_sharp,
@@ -332,7 +348,7 @@ class _ViewScreenState extends State<ViewScreen> {
                                                         ],
                                                         borderRadius:
                                                         BorderRadius.all(Radius.circular(5)),
-                                                        color: Color(0xff1c2438),
+                                                        color: Colors.green,
                                                       ),
                                                       child: Icon(
                                                         Icons.arrow_right,
@@ -368,7 +384,7 @@ class _ViewScreenState extends State<ViewScreen> {
                                                         )
                                                       ],
                                                       borderRadius: BorderRadius.all(Radius.circular(5)),
-                                                      color: Color(0xff1c2438),
+                                                      color: Colors.lightBlueAccent,
                                                     ),
                                                     child: Icon(
                                                       Icons.arrow_drop_down,
@@ -396,7 +412,27 @@ class _ViewScreenState extends State<ViewScreen> {
                                                         fontsize++;
                                                       });
                                                     },
-                                                    child: fontsizeincrease(),
+                                                    child: Container(
+                                                      width: 40,
+                                                      height: 30,
+                                                      alignment: Alignment.center,
+                                                      decoration: const BoxDecoration(
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                            color: Colors.black,
+                                                            blurRadius: 1,
+                                                            spreadRadius: 0.5,
+                                                          )
+                                                        ],
+                                                        borderRadius:
+                                                        BorderRadius.all(Radius.circular(5)),
+                                                        color: Colors.green,
+                                                      ),
+                                                      child: Text(
+                                                        'A+',
+                                                        style: TextStyle(color: Colors.black),
+                                                      ),
+                                                    ),
                                                   ),
                                                   SizedBox(
                                                     width: 12,
@@ -407,7 +443,27 @@ class _ViewScreenState extends State<ViewScreen> {
                                                         fontsize--;
                                                       });
                                                     },
-                                                    child: fontsizereduce(),
+                                                    child: Container(
+                                                      width: 40,
+                                                      height: 30,
+                                                      alignment: Alignment.center,
+                                                      decoration: const BoxDecoration(
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                            color: Colors.black,
+                                                            blurRadius: 1,
+                                                            spreadRadius: 0.5,
+                                                          )
+                                                        ],
+                                                        borderRadius:
+                                                        BorderRadius.all(Radius.circular(5)),
+                                                        color: Colors.redAccent,
+                                                      ),
+                                                      child: Text(
+                                                        'A-',
+                                                        style: TextStyle(color: Colors.black),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ],
                                               )
@@ -523,7 +579,7 @@ class _ViewScreenState extends State<ViewScreen> {
                         imgdata = bytedata!.buffer.asUint8List();
                         ImageGallerySaver.saveImage(imgdata!,
                             name: 'poster', quality: 100);
-                        SnackBar(content: Text('img is Save'),);
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Save'),));
 
                       },
                       icon: Icon(
@@ -540,7 +596,7 @@ class _ViewScreenState extends State<ViewScreen> {
                           fontWeight: FontWeight.bold,
                           fontSize: 18),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -550,16 +606,17 @@ class _ViewScreenState extends State<ViewScreen> {
                 children: [
                   IconButton(
                       onPressed: () async {
+
                         RenderRepaintBoundary? boundray = imgkey.currentContext!
                             .findRenderObject() as RenderRepaintBoundary;
                         ui.Image image = await boundray.toImage();
                         ByteData? bytedata =
-                            await image.toByteData(format: ui.ImageByteFormat.png);
+                        await image.toByteData(format: ui.ImageByteFormat.png);
                         imgdata = bytedata!.buffer.asUint8List();
                         final directory = await getApplicationDocumentsDirectory();
                         File fileImage = await File('${directory.path}/img.png').create();
                         fileImage.writeAsBytesSync(imgdata!);
-                        // await ShareExtend.share(fileImage.path, 'festival');
+                        await ShareExtend.share(fileImage.path, 'festival');
                       },
                       icon: Icon(
                         Icons.share,
