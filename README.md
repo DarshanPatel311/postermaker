@@ -55,3 +55,13 @@ samples, guidance on mobile development, and a full API reference.
 
 
 
+
+
+
+
+<video src="
+https://github.com/DarshanPatel311/postermaker/assets/143177575/6096b2e4-44ae-4efa-b9cf-c82603c291fd" width="400">
+
+
+
+
